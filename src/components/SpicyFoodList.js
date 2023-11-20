@@ -4,7 +4,7 @@ import { spicyFoods, getNewRandomSpicyFood } from "../data";
 function SpicyFoodList() {
   const [foods, setFoods] = useState(spicyFoods);
   const [filter, setFilter] = useState("All")
-  const [filteredFoods, setFilteredFoods] = useState({})
+  // const [filteredFoods, setFilteredFoods] = useState({})
 
   function handleAddFood() {
     const newFood = getNewRandomSpicyFood();
@@ -41,16 +41,22 @@ function SpicyFoodList() {
 
     setFilter(cuisine)
     const filterFoods = foods.filter(food => food.cuisine === cuisine); 
-    setFilteredFoods(filterFoods)
-    console.log("Filtering Foods", filterFoods)
+    // setFilteredFoods(filterFoods)
+    // console.log("Filtering Foods", filterFoods)
   }
 
   console.log("Filter in component: ", filter)
-  console.log("Filtering Foods", filteredFoods)
+  // console.log("Filtering Foods", filteredFoods)
     
-  const filtering = filter === 'All' ? foods : filteredFoods
+  const foodsToDisplay = foods.filter((food) => {
+    if (filter === "All") {
+      return true; //returns all elements in the array
+    } else {
+      return food.cuisine === filter; //returns filtered elements.
+    }
+  });
 
-  const foodList = filtering.map((food) => (
+  const foodList = foodsToDisplay.map((food) => (
      <li 
       key={food.id}
       onClick={() => handleUpdateFood(food.id)}>
